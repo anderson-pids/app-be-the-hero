@@ -1,24 +1,13 @@
 const express = require('express');
-const crypto = require('crypto');
-const connection = require('./database/connection');
-
 const routes = express.Router();
 
-routes.post('/ongs', async (request, response) => {
-    const {name, email, whatsapp, city, uf} = request.body;
+const ongController = require('./controllers/ongController')
+const incidentController = require('./controllers/incidentController')
 
-    const id = crypto.randomBytes(4).toString('HEX');
+routes.get('/ongs', ongController.index);
+routes.post('/ongs', ongController.create);
 
-    await connection('ongs').insert({
-        id,
-        name,
-        email,
-        whatsapp,
-        city,
-        uf
-    });
-
-    return response.json({id});    
-});
+routes.get('/incidents', incidentController.index);
+routes.post('/incidents', incidentController.create);
 
 module.exports = routes;
