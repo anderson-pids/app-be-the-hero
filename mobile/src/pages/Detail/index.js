@@ -8,6 +8,7 @@ import styles from './styles';
 
 export default function Detail() {
     const navigation = useNavigation();
+    const phone = '5592993531716';
     const message = 'Olá APAE, estou entrando em contato pois gostaria de ajudar no caso "Cadelinha atropelada" com o valor de R$ 120,00';
     const navigateBack = () => {
         navigation.goBack();
@@ -22,7 +23,7 @@ export default function Detail() {
     }
 
     const sendWhatsapp = () => {
-        Linking.openURL(`whatsapp://send?phone=5592993531716&text=${message}`);
+        Linking.openURL(`whatsapp://send?phone=${phone}&text=${message}`);
     }
 
     return (
