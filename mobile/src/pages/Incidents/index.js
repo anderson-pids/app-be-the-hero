@@ -1,18 +1,28 @@
-import React from 'react';
-import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-import logoImg from '../../assets/logo.png';
+import React, { useState, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
+
+import api from '../../services/api';
+import logoImg from '../../assets/logo.png';
 import styles from './styles';
 
 
 export default function Incidents() {
     const navigation = useNavigation();
-
+    const [incidents, setIncidents] = useState([]);
     const navigateToDetail = () => {
         navigation.navigate('Detail')
     }
+
+    const loadIncidents = async () => {
+        const response = await api.get('incidents');
+        setIncidents(response.data);
+    }
+
+    useEffect(() => {
+        loadIncidents();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -27,19 +37,19 @@ export default function Incidents() {
 
             <FlatList
                 style={styles.incidentList}
-                data={[1,2,3,4,5]}
-                keyExtractor={incident => String(incident)}
+                data={incidents}
+                keyExtractor={incident => String(incident.id)}
                 showsVerticalScrollIndicator={false}
-                renderItem={() => (
+                renderItem={( {item: incident} ) => (
                     <View style={styles.incident}>
                         <Text style={styles.incidentProperty}>ONG:</Text>
-                        <Text style={styles.incidentValue}>APAE</Text>
+                        <Text style={styles.incidentValue}>{incident.name}</Text>
 
-                        <Text style={styles.incidentProperty}>ONG:</Text>
-                        <Text style={styles.incidentValue}>APAE</Text>
+                        <Text style={styles.incidentProperty}>CASO:</Text>
+                        <Text style={styles.incidentValue}>{incident.title}</Text>
 
-                        <Text style={styles.incidentProperty}>ONG:</Text>
-                        <Text style={styles.incidentValue}>APAE</Text>
+                        <Text style={styles.incidentProperty}>VALOR:</Text>
+                        <Text style={styles.incidentValue}>{incident.value}</Text>
 
                         <TouchableOpacity
                             style={styles.detailsButton}
