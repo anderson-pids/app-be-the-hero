@@ -15,6 +15,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#e02041"
     },
+    "android": {
+      "package": "com.andersonpids.bethehero",
+      "versionCode": 1
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
