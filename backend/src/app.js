@@ -12,4 +12,5 @@ app.use(cors());
 app.use(routes);
 // trata erros via celebrate - joi
 app.use(errors())
-app.listen(3333);
+
+module.exports = app;
